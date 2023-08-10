@@ -50,6 +50,7 @@
   font-size: 1.6rem;
   font-weight: 500;
   padding: 10px;
+  cursor: pointer;
   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
   border: none;
   transition: all 0.3s ease-in-out;
@@ -68,8 +69,7 @@
 }
 .completed{
   text-decoration: line-through;
-  opacity: 0.5;
-
+  opacity: 0.3;
 }
 
 .list_item {
@@ -87,23 +87,32 @@
 .list_item span {
   font-size: 1.8rem;
   font-weight: 300;
-  transition: all 0.4s ease-in;
+  transition: all 2s ease-in;
 }   
-.list_item div i{
+.list_item div button{
     padding: 5px;
+    cursor: pointer;
+    border: none;
     margin-right: 5px;
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
     transition: all 0.3s ease-in-out;
     font-size: 1.4rem;
 }
-.list_item div i:hover{
+.list_item div button:hover{
   transform: scale(0.9);
 }
 .list_item div .del{
-    color: #ad2831;
+    /* background-color: #ffd131; */
+    background-color: #ad2831;
+    color: white;
 }
 
 
-.list_item div  .check{
-    color: green;
+.list_item div .check{
+  background-color: green;
+  color: white;
+}
+.list_item div  .edit{
+  background-color: blue;
+  color: white;
 }

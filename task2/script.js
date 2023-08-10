@@ -2,7 +2,13 @@ let inp = document.getElementById('inp')
 let btn = document.getElementById("btn")
 let list = document.getElementById("list")
 
-let allTodo = [];
+let editing = false;
+let editID;
+
+let allTodo = [ {id:1,
+    text:'Learn JavaScript',
+    completed:false,
+}];
 
 if (localStorage.getItem("allTodo")) {
     allTodo = JSON.parse(localStorage.getItem("allTodo"))
@@ -17,15 +23,25 @@ btn.addEventListener("click",()=>{
     }else{
         todo.id = 1;
     }
-    todo.text = inp.value;
+    if (editing) {
+       let editTodo = allTodo.find((ele)=>{
+            return ele.id === editID;
+        })
+        editTodo.text = inp.value.trim()
+        display(allTodo)
+        editing = false;
+        editID = null;
+    }else{
+        todo.text = inp.value.trim();
+    
     if (todo.text !== '') {
         allTodo.push(todo)
-        console.log(allTodo);
         display(allTodo);
     }else{
         alert("please enter todo")
         display(allTodo);
     }
+}
    
 })
 
@@ -39,27 +55,46 @@ function display(allTodo){
         let span = document.createElement("span");
         span.innerHTML = ele.text;
 
-        if (ele.completed === true) {
-            span.classList.add('completed')
-        }
-        li.appendChild(span)
+       
    
         let btnDIv = document.createElement("div")
-        
-        let check = document.createElement("i")
+
+        let check = document.createElement("button")
         check.classList.add("fa-solid","fa-check","check")
         check.addEventListener("click",()=>{
             ele.completed = true;
             display(allTodo)
         })
-        let del = document.createElement("i")
+        
+        let del = document.createElement("button")
 
         del.classList.add("fa-solid","fa-trash-can","del")
         del.addEventListener("click",()=>{
             deleteToDo(ele.id)
         })
+
+        let edit = document.createElement("button")
+
+        edit.classList.add("fa-regular","fa-pen-to-square","edit")
+        edit.addEventListener("click",()=>{
+            EditToDo(ele)
+        })
+
+        if (ele.completed === true) {
+            span.classList.add('completed')
+
+            check.style.cursor = "not-allowed";
+            check.style.opacity = "0.4"
+            check.setAttribute("disabled",true)
+
+            edit.style.cursor = "not-allowed";
+            edit.style.opacity = "0.4"
+            edit.setAttribute("disabled",true)
+        }
+
+        li.appendChild(span)
     
-        btnDIv.append(check,del)
+        btnDIv.append(check,edit,del)
         li.appendChild(btnDIv)
         list.appendChild(li)
     });
@@ -76,3 +111,12 @@ function deleteToDo(id){
     display(allTodo)
 }
 
+function EditToDo(ele){
+    editing = true;
+    inp.focus()
+    if (editing) {
+        btn.innerText = "Edit";
+    }
+    editID = ele.id;
+    inp.value = ele.text;
+}
