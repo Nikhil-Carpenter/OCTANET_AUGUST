@@ -5,10 +5,7 @@ let list = document.getElementById("list")
 let editing = false;
 let editID;
 
-let allTodo = [ {id:1,
-    text:'Learn JavaScript',
-    completed:false,
-}];
+let allTodo = [];
 
 if (localStorage.getItem("allTodo")) {
     allTodo = JSON.parse(localStorage.getItem("allTodo"))
